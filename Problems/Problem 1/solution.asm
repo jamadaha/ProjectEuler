@@ -21,9 +21,7 @@ main:           push            ebp
                 xor             edi, edi        ; sum = 0
                 xor             esi, esi        ; i = 0
 
-                ; calculate sum		
-loop:
-                ; check division by 3
+loop:           ; check division by 3
                 mov             eax, esi
                 xor             edx, edx
                 mov             ebx, 3
@@ -46,7 +44,7 @@ divisible:      add             edi, esi
 
 increment:      inc             esi
                 cmp             esi, 1000
-                jne             loop		; if esi < 1000
+                jne             loop            ; if esi < 1000
 
                 ; printing
                 push            edi
