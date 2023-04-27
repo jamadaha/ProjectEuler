@@ -39,8 +39,8 @@ loop:           inc             esi
                 mov             esi, 1
                 cmp             edi, ebx
                 jl              check_value
-                inc             dword [found]                             ; found prime
-                cmp             dword [found], 1000                         ; if target
+                inc             dword [found]                   ; found prime
+                cmp             dword [found], 3              ; if target
                 je              done                            ; goto done
                 inc             ebx                             ; else increment, and try next
                 jmp             is_prime                
@@ -54,4 +54,4 @@ done:           push            ebx
                 mov             eax, 0                          ; return code
                 mov             esp, ebp
                 pop             ebp
-                ret:
+                ret

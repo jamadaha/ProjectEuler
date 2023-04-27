@@ -1,3 +1,5 @@
 *.swp
 *.o
 **/out
+*.data
+*.old
