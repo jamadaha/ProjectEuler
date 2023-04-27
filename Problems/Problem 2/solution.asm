@@ -1,4 +1,4 @@
-; compile : nasm -f elf32 solution.asm; gcc -no-pie -m32 -o out solution.o; ./out
+;  compile : nasm -f elf32 solution.asm; gcc -no-pie -m32 -o out solution.o; ./out
 ; ---------------------------------------------------------------------------------------------
 ;
 ;  Project Euler - Problem 2
