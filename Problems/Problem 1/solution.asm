@@ -11,7 +11,7 @@
                 extern          printf
 
                 section         .data
-                msg             db "%i", 0x0a, 0x00		
+msg:            db              "%i", 0x0a, 0x00		
 
 
                 section         .text
