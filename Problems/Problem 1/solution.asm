@@ -7,54 +7,54 @@
 ;  Find the sum of all the multiples of 3 or 5 below 1000.
 ;
 ; -------------------------------------------------------------------------------------------------
-		global		main
-		extern		printf
+                global          main
+                extern          printf
 
-		section		.data
-		msg		db "%i", 0x0a, 0x00		
+                section         .data
+                msg             db "%i", 0x0a, 0x00		
 
 
-		section		.text
-main:		push		ebp
-		mov		ebp, esp
+                section         .text
+main:           push            ebp
+                mov             ebp, esp
 		
-		xor		edi, edi		; sum = 0
-		xor		esi, esi		; i = 0
+                xor             edi, edi        ; sum = 0
+                xor             esi, esi        ; i = 0
 
-		; calculate sum		
-loop:		
-		; check division by 3
-		mov		eax, esi
-		xor		edx, edx
-		mov		ebx, 3
-		div		ebx
-		cmp		edx, 0
-		je		divisible
-		
-		; check division by 5
-		mov		eax, esi
-		xor		edx, edx
-		mov		ebx, 5
-		div		ebx
-		cmp		edx, 0
-		je		divisible
+                ; calculate sum		
+loop:
+                ; check division by 3
+                mov             eax, esi
+                xor             edx, edx
+                mov             ebx, 3
+                div             ebx
+                cmp             edx, 0
+                je              divisible
 
-		; non-divisible
-		jmp		increment
+                ; check division by 5
+                mov             eax, esi
+                xor             edx, edx
+                mov             ebx, 5
+                div             ebx
+                cmp             edx, 0
+                je              divisible
 
-divisible:	add		edi, esi
+                ; non-divisible
+                jmp             increment
 
-increment:	inc		esi
-		cmp		esi, 1000
-		jne		loop			; if esi < 1000
+divisible:      add             edi, esi
 
-		; printing
-		push		edi
-		push		msg
-		call		printf
+increment:      inc             esi
+                cmp             esi, 1000
+                jne             loop		; if esi < 1000
 
-		; handle stack stuff
-		mov		eax, 0			; return code
-		mov		esp, ebp
-		pop 		ebp
-		ret	
+                ; printing
+                push            edi
+                push            msg
+                call            printf
+
+                ; handle stack stuff
+                mov             eax, 0          ; return code
+                mov             esp, ebp
+                pop             ebp
+                ret
