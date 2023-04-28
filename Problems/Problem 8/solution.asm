@@ -29,6 +29,8 @@
 ;  Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. 
 ;  What is the value of this product?
 ;
+;  Technically works, however, not for 13 neighbours. As the result can not be stored in 32 bit.
+;
 ; ------------------------------------------------------------------------------------------------------------
                 global          main
                 extern          printf
