@@ -23,12 +23,13 @@ main:           push            ebp
                 ; init 
                 mov             ebx, 5                          ; value
                 ; find prime
-is_prime:       xor             edi, edi                          ; outer value
-                xor             esi, esi                          ; inner value
+is_prime:       xor             edi, edi                        ; outer value
+                xor             esi, esi                        ; inner value
                 ; check whether current value is product of the values
 check_value:    mov             eax, edi
                 mul             esi
                 cmp             eax, ebx
+                jg              inc_outer
                 jne             loop                            ; goto loop if not product
                 inc             ebx
                 jmp             is_prime                        ; found product, check next value
@@ -36,7 +37,7 @@ check_value:    mov             eax, edi
 loop:           inc             esi
                 cmp             esi, ebx
                 jl              check_value
-                inc             edi
+inc_outer:      inc             edi
                 mov             esi, edi
                 mov             eax, edi
                 mul             eax
