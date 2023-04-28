@@ -24,7 +24,7 @@ main:           push            ebp
                 mov             esi, 5                          ; value
                 
                 ; find prime by index
-is_prime:       mov             ecx, 2                          ; set ecx to 0
+is_prime:       mov             ecx, 2
 check_value:    mov             eax, esi
                 xor             edx, edx
                 div             ecx
