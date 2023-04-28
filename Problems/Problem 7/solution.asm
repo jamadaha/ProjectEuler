@@ -1,12 +1,12 @@
 ; compile : nasm -f elf32 solution.asm; gcc -no-pie -m32 -o out solution.o; ./out
-; -----------------------------------------------------------------------------------------------------
+; ------------------------------------------------------------------------------------------------------
 ;
 ;  Project Euler - Problem 7
 ;
 ;  By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
 ;  What is the 10 001st prime number?
 ;
-; -----------------------------------------------------------------------------------------------------
+; ------------------------------------------------------------------------------------------------------
                 global          main
                 extern          printf
 
@@ -22,8 +22,11 @@ main:           push            ebp
                 ; init 
                 mov             ebx, 5                          ; value
                 ; find prime
-is_prime:       mov             edi, 2                          ; outer value
-                mov             esi, 3                          ; inner value
+is_prime:       test            ebx, 1
+                jne             odd
+                inc             ebx
+odd:            mov             edi, 2                          ; outer value
+                mov             esi, 2                          ; inner value
                 ; check whether current value is product of the values
 check_value:    mov             eax, edi
                 mul             esi
@@ -36,11 +39,11 @@ loop:           inc             esi
                 cmp             esi, ebx
                 jl              check_value
                 inc             edi
-                mov             esi, 1
+                mov             esi, edi
                 cmp             edi, ebx
                 jl              check_value
                 inc             dword [found]                   ; found prime
-                cmp             dword [found], 3              ; if target
+                cmp             dword [found], 1000             ; if target
                 je              done                            ; goto done
                 inc             ebx                             ; else increment, and try next
                 jmp             is_prime                
