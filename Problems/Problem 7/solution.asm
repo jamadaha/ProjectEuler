@@ -19,14 +19,12 @@ found:          dw              2
                 section         .text
 main:           push            ebp
                 mov             ebp, esp
+               
                 ; init 
                 mov             ebx, 5                          ; value
                 ; find prime
-is_prime:       test            ebx, 1
-                jne             odd
-                inc             ebx
-odd:            mov             edi, 2                          ; outer value
-                mov             esi, 2                          ; inner value
+is_prime:       xor             edi, edi                          ; outer value
+                xor             esi, esi                          ; inner value
                 ; check whether current value is product of the values
 check_value:    mov             eax, edi
                 mul             esi
@@ -40,12 +38,14 @@ loop:           inc             esi
                 jl              check_value
                 inc             edi
                 mov             esi, edi
-                cmp             edi, ebx
-                jl              check_value
+                mov             eax, edi
+                mul             eax
+                cmp             eax, ebx
+                jle             check_value
                 inc             dword [found]                   ; found prime
-                cmp             dword [found], 1000             ; if target
+                cmp             dword [found], 10001            ; if target
                 je              done                            ; goto done
-                inc             ebx                             ; else increment, and try next
+                add             ebx,2                           ; else increment, and try next
                 jmp             is_prime                
 
                 ; printing
