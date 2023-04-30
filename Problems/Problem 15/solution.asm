@@ -11,6 +11,9 @@
 ;
 ;  Doesn't work for 20x20 grid, as the number of paths is more than can a 32-bit number can represent
 ;
+;  NOTE: Takes a while (10+ min) to calculate solution
+;  TODO: Optimise
+;
 ; ------------------------------------------------------------------------------------------------------------
                 global          main
                 extern          printf
