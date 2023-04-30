@@ -16,7 +16,9 @@
                 extern          printf
 
                 section         .data
-msg:            db              "%i", 0xa, 0x0
+msg:            db              "%i", 0x0
+msg_nl:         db              "", 0xa, 0x0
+count:          db              32 dup(0)
 
                 section         .text
 main:           push            ebp
@@ -24,14 +26,25 @@ main:           push            ebp
 
                 xor             ebx, ebx
 
-                mov             esi, 15                         ; grid size
+                mov             esi, 20                         ; grid size
                 push            0                               ; initial y pos
                 push            0                               ; initial x pos
                 call            flood_fill
-                add             esp, 8
-                
-print:          push            eax
+               
+                xor             edi, edi
+zero_purge:     cmp             byte [count + edi], 0
+                jne             print_loop
+                inc             edi
+                jmp             zero_purge
+print_loop:     xor             eax, eax
+                mov             al, byte [count + edi]
+                push            eax
                 push            msg
+                call            printf
+                inc             edi
+                cmp             edi, 32
+                jne             print_loop
+finish_print:   push            msg_nl
                 call            printf
 
 
@@ -48,9 +61,6 @@ print:          push            eax
                 ; max y pos should be stored in edi
 flood_fill:     push            ebp                             ; save old base pointer
                 mov             ebp, esp                        ; set new base pointer
-                ;push            ebx                             ; save value of ebx
-                ;push            ecx                             ; save value of ecx 
-                push            edx                             ; save value of edx
                 
                 xor             edx, edx                        ; clear edx to use as temp return
                 mov             ebx, [ebp+8]                    ; move parameter 1 into ebx
@@ -61,7 +71,18 @@ check:          cmp             ebx, esi
                 jne             flood_x
                 cmp             ecx, esi
                 jne             flood_y
-                inc             edx
+inc_count:      inc             byte [count + 31]
+                push            ecx
+                xor             eax, eax
+                mov             ecx, 31
+prop_inc:       mov             al, byte [count + ecx]
+                cmp             al, 10
+                jne             inc_return
+                mov             byte [count + ecx], 0
+                dec             ecx
+                inc             byte [count + ecx]
+                jmp             prop_inc
+inc_return:     pop             ecx
                 jmp             return
 
                 ; flood
@@ -71,7 +92,6 @@ flood_x:        inc             ebx
                 call            flood_fill
                 add             esp, 8
                 dec             ebx
-                add             edx, eax
 flood_check_y:  cmp             ecx, esi
                 je              return
 flood_y:        inc             ecx
@@ -80,12 +100,7 @@ flood_y:        inc             ecx
                 call            flood_fill
                 add             esp, 8
                 dec             ecx
-                add             edx, eax
 
-return:         mov             eax, edx
-                pop             edx
-                ;pop             ecx                             ; restore ecx
-                ;pop             ebx                             ; restore ebx
-                mov             esp, ebp
+return:         mov             esp, ebp
                 pop             ebp
                 ret
